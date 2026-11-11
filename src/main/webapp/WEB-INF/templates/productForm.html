@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New Product | NileMart</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navigation}"></div>
+<main class="container narrow">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">CATALOG MANAGEMENT</p>
+            <h1>New product</h1>
+            <p class="muted">Add a product and assign it to a sub-category and optional brand.</p>
+        </div>
+        <a class="button secondary" th:href="@{/products}">Back</a>
+    </div>
+
+    <form class="panel form-panel" th:action="@{/products}" th:object="${product}" method="post">
+        <div class="field">
+            <label for="sku">SKU</label>
+            <input id="sku" type="text" th:field="*{sku}" placeholder="e.g. PH-A55-128">
+            <small class="error" th:if="${#fields.hasErrors('sku')}" th:errors="*{sku}"></small>
+        </div>
+
+        <div class="field">
+            <label for="name">Product name</label>
+            <input id="name" type="text" th:field="*{name}" placeholder="e.g. Samsung Galaxy A55 128GB">
+            <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+        </div>
+
+        <div class="form-grid">
+            <div class="field">
+                <label for="price">Price (EGP)</label>
+                <input id="price" type="number" min="0.01" step="0.01" th:field="*{price}">
+                <small class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+            </div>
+            <div class="field">
+                <label for="stock">Stock</label>
+                <input id="stock" type="number" min="0" th:field="*{stock}">
+                <small class="error" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></small>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="category">Sub-category</label>
+            <select id="category" th:field="*{category}">
+                <option value="">Choose a sub-category</option>
+                <option th:each="category : ${subCategories}"
+                        th:value="${category.slug}"
+                        th:text="${category.name}">Mobile Phones</option>
+            </select>
+            <small class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></small>
+        </div>
+
+        <div class="field">
+            <label for="brandSlug">Brand</label>
+            <select id="brandSlug" th:field="*{brandSlug}">
+                <option value="">No brand</option>
+                <option th:each="brand : ${activeBrands}"
+                        th:value="${brand.slug}"
+                        th:text="${brand.name}">Samsung</option>
+            </select>
+            <small class="error" th:if="${#fields.hasErrors('brandSlug')}" th:errors="*{brandSlug}"></small>
+        </div>
+
+        <div class="form-actions">
+            <a class="button secondary" th:href="@{/products}">Cancel</a>
+            <button class="button primary" type="submit">Save product</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

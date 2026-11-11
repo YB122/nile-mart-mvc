@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New Brand | NileMart</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navigation}"></div>
+<main class="container narrow">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">CATALOG MANAGEMENT</p>
+            <h1>New brand</h1>
+            <p class="muted">Add a manufacturer to the catalog.</p>
+        </div>
+        <a class="button secondary" th:href="@{/brands}">Back</a>
+    </div>
+
+    <form class="panel form-panel" th:action="@{/brands}" th:object="${brand}" method="post">
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" th:field="*{name}" placeholder="e.g. Nile Cotton">
+            <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+        </div>
+
+        <div class="field">
+            <label for="slug">Slug</label>
+            <input id="slug" type="text" th:field="*{slug}" placeholder="e.g. nile-cotton">
+            <small class="hint">Lowercase letters, numbers and hyphens only.</small>
+            <small class="error" th:if="${#fields.hasErrors('slug')}" th:errors="*{slug}"></small>
+        </div>
+
+        <label class="checkbox-row">
+            <input type="checkbox" th:field="*{active}">
+            <span>Active</span>
+        </label>
+
+        <div class="form-actions">
+            <a class="button secondary" th:href="@{/brands}">Cancel</a>
+            <button class="button primary" type="submit">Save brand</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

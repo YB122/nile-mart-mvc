@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Products | NileMart</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navigation}"></div>
+<main class="container">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">CATALOG MANAGEMENT</p>
+            <h1>Products</h1>
+            <p class="muted">Manage products and their category and brand assignments.</p>
+        </div>
+        <a class="button primary" th:href="@{/products/new}">+ Add product</a>
+    </div>
+
+    <section class="panel">
+        <table>
+            <thead>
+            <tr><th>SKU</th><th>Product</th><th>Category</th><th>Brand</th><th>Price</th><th>Stock</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td><code th:text="${product.sku}">PH-A55-128</code></td>
+                <td class="strong" th:text="${product.name}">Samsung Galaxy A55 128GB</td>
+                <td th:text="${product.categoryName}">Mobile Phones</td>
+                <td th:text="${product.brandName}">Samsung</td>
+                <td th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' EGP'">18,500.00 EGP</td>
+                <td th:text="${product.stock}">7</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(products)}"><td colspan="6" class="empty">No products yet.</td></tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>

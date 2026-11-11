@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Brands | NileMart</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navigation}"></div>
+<main class="container">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">CATALOG MANAGEMENT</p>
+            <h1>Brands</h1>
+            <p class="muted">Manage the manufacturers associated with your products.</p>
+        </div>
+        <a class="button primary" th:href="@{/brands/new}">+ Add brand</a>
+    </div>
+
+    <section class="panel">
+        <table>
+            <thead>
+            <tr><th>Name</th><th>Slug</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="brand : ${brands}">
+                <td class="strong" th:text="${brand.name}">Samsung</td>
+                <td><code th:text="${brand.slug}">samsung</code></td>
+                <td>
+                    <span class="status"
+                          th:classappend="${brand.active} ? ' active' : ' inactive'"
+                          th:text="${brand.active} ? 'Yes' : 'No'">Yes</span>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(brands)}"><td colspan="3" class="empty">No brands yet.</td></tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="topbar" th:fragment="navigation">
+    <a class="brand-mark" th:href="@{/products}">NileMart <span>Back Office</span></a>
+    <div class="nav-links">
+        <a th:href="@{/products}">Products</a>
+        <a th:href="@{/categories}">Categories</a>
+        <a th:href="@{/brands}">Brands</a>
+    </div>
+</nav>
+</body>
+</html>

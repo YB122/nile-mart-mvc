@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Categories | NileMart</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navigation}"></div>
+<main class="container">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">CATALOG MANAGEMENT</p>
+            <h1>Categories</h1>
+            <p class="muted">Organize the catalog into top-level categories and sub-categories.</p>
+        </div>
+        <a class="button primary" th:href="@{/categories/new}">+ Add category</a>
+    </div>
+
+    <section class="panel">
+        <table>
+            <thead>
+            <tr><th>Name</th><th>Slug</th><th>Parent</th><th>Order</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="category : ${categories}">
+                <td th:class="${category.subCategory} ? 'child-name' : 'strong'"
+                    th:text="${category.name}">Electronics</td>
+                <td><code th:text="${category.slug}">electronics</code></td>
+                <td th:text="${category.parentName}">-</td>
+                <td th:text="${category.displayOrder}">1</td>
+                <td>
+                    <span class="status"
+                          th:classappend="${category.active} ? ' active' : ' inactive'"
+                          th:text="${category.active} ? 'Yes' : 'No'">Yes</span>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(categories)}"><td colspan="5" class="empty">No categories yet.</td></tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>

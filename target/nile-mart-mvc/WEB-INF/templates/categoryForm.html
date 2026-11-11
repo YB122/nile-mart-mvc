@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New Category | NileMart</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navigation}"></div>
+<main class="container narrow">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">CATALOG MANAGEMENT</p>
+            <h1>New category</h1>
+            <p class="muted">Create a top-level category or a sub-category.</p>
+        </div>
+        <a class="button secondary" th:href="@{/categories}">Back</a>
+    </div>
+
+    <form class="panel form-panel" th:action="@{/categories}" th:object="${category}" method="post">
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" th:field="*{name}" placeholder="e.g. Mobile Phones">
+            <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+        </div>
+
+        <div class="field">
+            <label for="slug">Slug</label>
+            <input id="slug" type="text" th:field="*{slug}" placeholder="e.g. mobile-phones">
+            <small class="hint">Must be unique across all categories.</small>
+            <small class="error" th:if="${#fields.hasErrors('slug')}" th:errors="*{slug}"></small>
+        </div>
+
+        <div class="field">
+            <label for="parentSlug">Parent category</label>
+            <select id="parentSlug" th:field="*{parentSlug}">
+                <option value="">None (top level)</option>
+                <option th:each="parent : ${parentCategories}"
+                        th:value="${parent.slug}"
+                        th:text="${parent.name}">Electronics</option>
+            </select>
+            <small class="error" th:if="${#fields.hasErrors('parentSlug')}" th:errors="*{parentSlug}"></small>
+        </div>
+
+        <div class="field">
+            <label for="displayOrder">Display order</label>
+            <input id="displayOrder" type="number" min="0" th:field="*{displayOrder}">
+            <small class="error" th:if="${#fields.hasErrors('displayOrder')}" th:errors="*{displayOrder}"></small>
+        </div>
+
+        <label class="checkbox-row">
+            <input type="checkbox" th:field="*{active}">
+            <span>Active</span>
+        </label>
+
+        <div class="form-actions">
+            <a class="button secondary" th:href="@{/categories}">Cancel</a>
+            <button class="button primary" type="submit">Save category</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>
